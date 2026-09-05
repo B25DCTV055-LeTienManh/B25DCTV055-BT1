@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Tính Đơn Giản</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .calculator {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+        }
+        #display {
+            width: 100%;
+            height: 60px;
+            background-color: #222222;
+            color: #00ffcc;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: right;
+            line-height: 60px;
+            padding: 0 15px;
+            box-sizing: border-box;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            height: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        button:hover { 
+            background-color: #d6d6d6; 
+        }
+        button.operator { 
+            background-color: #ff9800; 
+            color: white; 
+        }
+        button.operator:hover { 
+            background-color: #e68a00; 
+        }
+        button.clear { 
+            background-color: #ea4335; 
+            color: white; 
+            grid-column: span 2;
+        }
+        button.clear:hover { 
+            background-color: #d32f2f; 
+        }
+        button.equal { 
+            background-color: #4caf50; 
+            color: white; 
+            grid-column: span 2;
+        }
+        button.equal:hover { 
+            background-color: #388e3c; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <div id="display">0</div>
+        <div class="buttons">
+            <button class="clear" id="btn-clear">Clear</button>
+            <button class="operator" value="/">/</button>
+            <button class="operator" value="*">*</button>
+            
+            <button value="7">7</button>
+            <button value="8">8</button>
+            <button value="9">9</button>
+            <button class="operator" value="-">-</button>
+            
+            <button value="4">4</button>
+            <button value="5">5</button>
+            <button value="6">6</button>
+            <button class="operator" value="+">+</button>
+            
+            <button value="1">1</button>
+            <button value="2">2</button>
+            <button value="3">3</button>
+            <button class="equal" id="btn-equal" style="grid-row: span 2; height: 110px;">=</button>
+            
+            <button value="0" style="grid-column: span 2;">0</button>
+            <button value=".">.</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById("display");
+        const buttons = document.querySelectorAll(".buttons button");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", function() {
+                const value = this.getAttribute("value");
+
+                if (this.id === "btn-clear") {
+                    display.innerText = "0";
+                } 
+                else if (this.id === "btn-equal") {
+                    try {
+                        display.innerText = eval(display.innerText);
+                    } catch (error) {
+                        display.innerText = "Lỗi!";
+                    }
+                } 
+                else {
+                    if (display.innerText === "0" || display.innerText === "Lỗi!") {
+                        display.innerText = value;
+                    } else {
+                        display.innerText += value;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
